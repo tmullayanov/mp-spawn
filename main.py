@@ -19,7 +19,9 @@ import decimal
 
 # proj specific
 import pi
+import spawn_types
 from spawn_types import check_positive
+import parallel
 
 
 def worker(arg):
@@ -46,8 +48,11 @@ def main():
     if args.sequential:
         print('pi(prec=%s) = %s' % (args.pi_prec, pi.calculate_pi_sequentially(args.pi_prec)))
         return
-    logging.debug('calculating task sizes...')
-
+    
+    p = spawn_types.NoDaemonPool(args.processes)
+    callback = parallel.get_worker_callback(args.spawn_by)
+    result = p.map(callback, parallel.get_ranges((0, args.pi_prec), args.processes))
+    print(sum(result))
 
 if __name__ == '__main__':
     main()
