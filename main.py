@@ -39,13 +39,15 @@ def parse_args(args=None):
     return parser.parse_args(args=args)
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args()
     logging.debug('args: {}'.format(args))
     decimal.getcontext().prec = args.pi_prec*2  #XXX: check the dec. digits precision
     if args.sequential:
         print('pi(prec=%s) = %s' % (args.pi_prec, pi.calculate_pi_sequentially(args.pi_prec)))
+        return
     logging.debug('calculating task sizes...')
-    #pool = mp.Pool(args.processes)
 
-    pass
+
+if __name__ == '__main__':
+    main()
