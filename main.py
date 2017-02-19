@@ -8,7 +8,7 @@ By default that leads to AssertionError with the following text:
 Requirements:
 Python 3.5+ (though the method should work on python 2.7 as well)
 
-As a modeling task, the calculation of PI with BPP algorithm was used.
+As a modeling task, the calculation of PI with BBP algorithm was used.
 '''
 # STL
 import multiprocessing as mp
@@ -45,10 +45,11 @@ def main():
     args = parse_args()
     logging.debug('args: {}'.format(args))
     decimal.getcontext().prec = args.pi_prec*2  #XXX: check the dec. digits precision
+    
     if args.sequential:
         print('pi(prec=%s) = %s' % (args.pi_prec, pi.calculate_pi_sequentially(args.pi_prec)))
         return
-    
+
     p = spawn_types.NoDaemonPool(args.processes)
     callback = parallel.get_worker_callback(args.spawn_by)
     result = p.map(callback, parallel.get_ranges((0, args.pi_prec), args.processes))

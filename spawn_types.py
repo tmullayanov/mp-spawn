@@ -10,6 +10,7 @@ import logging
 import multiprocessing as mp
 import multiprocessing.pool as pool
 
+
 def check_positive(value):
     '''Predicate which checks if the argument can be treated as positive int'''
     ivalue = int(value)
@@ -27,6 +28,7 @@ class NoDaemonProcess(mp.Process):
     @daemon.setter
     def daemon(self, value):
         pass
+
 
 class NoDaemonPool(pool.Pool):
     Process = NoDaemonProcess
