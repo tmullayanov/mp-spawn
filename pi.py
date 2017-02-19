@@ -13,4 +13,8 @@ def bbp_term(k):
     third = Dec('1') / Dec(str(8*k+5))
     fourth = Dec('1') / Dec(str(8*k+6))
 
-    return (first - seond - third - fourth) / Dec(str(16**k))
+    return (first - second - third - fourth) / Dec(str(16**k))
+
+def calculate_pi_sequentially(precision):
+    assert precision > 0, "Cannot calculate negative precision!"
+    return sum(map(bbp_term, range(precision)))
