@@ -18,7 +18,7 @@ import logging
 
 # proj specific
 from pi import bbp_term
-from types import PrecisionAction
+from spawn_types import PrecisionAction
 
 
 def worker(arg):
@@ -32,13 +32,14 @@ def parse_args(args=None):
     parser.add_argument('--spawn-by', help='number of 2nd level processes to spawn',
                         action='store', default=2, type=int)
     parser.add_argument('--pi-prec', help='number of hex digits of pi that would be calculated',
-                        action=PrecisionAction, type=int)
+                        action=PrecisionAction, type=int, default=1000)
     return parser.parse_args(args=args)
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
     logging.debug('args: {}'.format(args))
-    pool = mp.Pool(args.processes)
+    logging.debug('calculating task sizes...')
+    #pool = mp.Pool(args.processes)
 
     pass
