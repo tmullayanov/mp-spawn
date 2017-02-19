@@ -28,3 +28,17 @@ def process_interval_seq(interval):
     import pi
     left, right = interval
     return sum(map(pi.bbp_term, range(left, right)))
+
+
+def process_interval_mp(interval, spawn=4):
+    import pi
+    from spawn_types import NoDaemonPool as Pool
+    left, right = interval
+    ranges = get_ranges(interval, spawn)
+    pool = Pool(spawn)
+    r = pool.map(process_interval_seq, ranges)
+    return sum(r)
+
+
+def get_worker_callback(spawn_rate):
+    return process_interval_seq if spawn_rate == 1 else process_interval_mp
