@@ -15,9 +15,10 @@ import multiprocessing as mp
 import os, sys, re
 import argparse
 import logging
+import decimal
 
 # proj specific
-from pi import bbp_term
+import pi
 from spawn_types import check_positive
 
 
@@ -32,13 +33,18 @@ def parse_args(args=None):
     parser.add_argument('--spawn-by', help='number of 2nd level processes to spawn',
                         action='store', default=2, type=check_positive)
     parser.add_argument('--pi-prec', help='number of hex digits of pi that would be calculated',
-                        action='store', type=check_positive, default=1000)
+                        action='store', type=check_positive, default=500)
+    parser.add_argument('--sequential', help='if set, program performs sequential calculation',
+                        action='store_true', default=False)
     return parser.parse_args(args=args)
 
 
 if __name__ == '__main__':
-    args = parser.parse_args()
+    args = parse_args()
     logging.debug('args: {}'.format(args))
+    decimal.getcontext().prec = args.pi_prec*2  #XXX: check the dec. digits precision
+    if args.sequential:
+        print('pi(prec=%s) = %s' % (args.pi_prec, pi.calculate_pi_sequentially(args.pi_prec)))
     logging.debug('calculating task sizes...')
     #pool = mp.Pool(args.processes)
 
