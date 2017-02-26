@@ -4,6 +4,9 @@ parallel.py - functions for parallel calculations
 Functions defined here:
 task_size(range, nodes)
 '''
+import pi
+from spawn_types import NoDaemonPool as Pool
+
 __all__ = ['get_ranges', 'get_worker_callback']
 
 def task_size(range, nodes):
@@ -33,7 +36,6 @@ def process_interval_seq(interval):
     inside of the interval sequentially.
     Returns the sum of map
     '''
-    import pi
     left, right = interval
     return sum(map(pi.bbp_term, range(left, right)))
 
@@ -44,8 +46,6 @@ def process_interval_mp(interval, spawn=4):
     inside of the interval in parallel.
     Return the sum of that map
     '''
-    import pi
-    from spawn_types import NoDaemonPool as Pool
 
     left, right = interval
     ranges = get_ranges(interval, spawn)

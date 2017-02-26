@@ -24,10 +24,6 @@ from spawn_types import check_positive
 import parallel
 
 
-def worker(arg):
-    pass
-
-
 def parse_args(args=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--processes', help='number of 1st level processes to spawn',
